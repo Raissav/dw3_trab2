@@ -14,13 +14,12 @@
             <div class="col-xl-12">
                 <div class="card mb-4">
                     <div class="col-2 ms-1 mt-1 mb-2">
-
                         <button type="button" class="btn btn-primary"
-                            onclick="window.location.href = '/alunos/insertAlunos'">Novo aluno</button>
+                            onclick="window.location.href = '/medicos/openMedicosInsert'">Novo medico</button>
                     </div>
                     <div class="card-header">
                         <i class="fas fa-table me-1"></i>
-                        Listagem de alunos
+                        Listagem de medicos
                     </div>
 
 
@@ -29,31 +28,28 @@
                             <thead>
                                 <tr>
                                     <th>Ação</th>                                    
-                                    <th>Prontuário</th>
+                                    <th>CRM</th>
                                     <th>Nome</th>
-                                    <th>Data Nascimento</th>
-                                    <th>Curso</th>
+                                    <th>Ativo</th>                                    
                                 </tr>
                             </thead>
                             <tbody>
                                 @model.data.registro.forEach(function(registro){
                                 <tr>                                    
-                                    <td><a href="/alunos/viewAlunos/@registro.alunoid/v" class="btn btn-info btn-sm"><i
+                                    <td><a href="/medicos/openMedicosUpdate/@registro.medicoid" class="btn btn-info btn-sm"><i
                                         class="fa fa-magnifying-glass"></i>Visualizar</a></td>
-                                    <td>@registro.prontuario</td>
+                                    <td>@registro.crm</td>
                                     <td>@registro.nome</td>
-                                    <td>@registro.datanascimento</td>
-                                    <td>@registro.descricao</td>
+                                    <td>@(registro.ativo ? "Sim" : "Não")</td>                                    
                                 </tr>
                                 })
                             </tbody>
                             <tfoot>
                                 <tr>
                                     <th>Ação</th>                                    
-                                    <th>Prontuário</th>
+                                    <th>CRM</th>
                                     <th>Nome</th>
-                                    <th>Data Nascimento</th>
-                                    <th>Curso</th>
+                                    <th>Ativo</th> 
                                 </tr>
                             </tfoot>
                         </table>
@@ -84,15 +80,4 @@
 
     table.buttons().container()
         .appendTo($('.col-sm-12:eq(0)', table.table().container()));
-
-    // function visualizaAluno(idPar) {
-    //     alert("Novo aluno com parâmetro:" + idPar);
-
-    // }
-
-    // new $.fn.dataTable.Buttons(table, {
-    //     buttons: [
-    //         'copy', 'excel', 'pdf'
-    //     ]
-    // });
 </script>

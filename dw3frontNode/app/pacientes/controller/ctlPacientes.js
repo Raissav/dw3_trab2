@@ -1,24 +1,24 @@
 const axios = require("axios");
 
-//@ Abre o formulário de manutenção de cursos
-const getAllCursos = (req, res) =>
+//@ Abre o formulário de manutenção de pacientes
+const getAllPacientes = (req, res) =>
   (async () => {
     userName = req.session.userName;
     try {
-      resp = await axios.get(process.env.SERVIDOR_DW3 + "/GetAllCursos", {});
+      resp = await axios.get(process.env.SERVIDOR_DW3 + "/GetAllPacientes", {});
       //console.log("[ctlLogin.js] Valor resp:", resp.data);
-      res.render("cursos/view_manutencao", {
-        title: "Manutenção de cursos",
+      res.render("pacientes/view_manutencao", {
+        title: "Manutenção de pacientes",
         data: resp.data,
         userName: userName,
       });
     } catch (erro) {
-      console.log("[ctlCursos.js|getAllCursos] Try Catch:Erro de requisição");
+      console.log("[ctlPacientes.js|getAllPacientes] Try Catch:Erro de requisição");
     }
   })();
 
-//@ Abre formulário de cadastro de cursos
-const openCursosInsert = (req, res) =>
+//@ Abre formulário de cadastro de pacientes
+const openPacientesInsert = (req, res) =>
   (async () => {
     var oper = "";
     userName = req.session.userName;
@@ -26,15 +26,15 @@ const openCursosInsert = (req, res) =>
     try {
       if (req.method == "GET") {
         oper = "c";
-        res.render("cursos/view_cadCursos", {
-          title: "Cadastro de cursos",
+        res.render("pacientes/view_cadPacientes", {
+          title: "Cadastro de pacientes",
           oper: oper,
           userName: userName,
         });
       }
     } catch (erro) {
       console.log(
-        "[ctlAlunos.js|insertAlunos] Try Catch: Erro não identificado",
+        "[ctlPacientes.js|insertPacientes] Try Catch: Erro não identificado",
         erro
       );
     }
@@ -42,10 +42,10 @@ const openCursosInsert = (req, res) =>
 
 //@ Função para validar campos no formulário
 function validateForm(regFormPar) {
-  if (regFormPar.cursoid == "") {
-    regFormPar.cursoid = 0;
+  if (regFormPar.pacienteid == "") {
+    regFormPar.pacienteid = 0;
   } else {
-    regFormPar.cursoid = parseInt(regFormPar.cursoid);
+    regFormPar.pacienteid = parseInt(regFormPar.pacienteid);
   }
 
   regFormPar.ativo = regFormPar.ativo === "true"; //converte para true ou false um check componet
@@ -54,8 +54,8 @@ function validateForm(regFormPar) {
   return regFormPar;
 }
 
-//@ Abre formulário de cadastro de cursos
-const openCursosUpdate = (req, res) =>
+//@ Abre formulário de cadastro de pacientes
+const openPacientesUpdate = (req, res) =>
   (async () => {
     var oper = "";
     userName = req.session.userName;
@@ -65,8 +65,8 @@ const openCursosUpdate = (req, res) =>
         oper = "u";
         const id = req.params.id;
         parseInt(id);
-        res.render("cursos/view_cadCursos", {
-          title: "Cadastro de cursos",
+        res.render("pacientes/view_cadPacientes", {
+          title: "Cadastro de pacientes",
           oper: oper,
           idBusca: id,
           userName: userName,
@@ -74,24 +74,24 @@ const openCursosUpdate = (req, res) =>
       }
     } catch (erro) {
       console.log(
-        "[ctlAlunos.js|insertAlunos] Try Catch: Erro não identificado",
+        "[ctlPacientes.js|insertPacientes] Try Catch: Erro não identificado",
         erro
       );
     }
   })();
 
 
-//@ Recupera os dados dos cursos
+//@ Recupera os dados dos pacientes
 const getDados = (req, res) =>
   (async () => {
     const idBusca = req.body.idBusca;    
     parseInt(idBusca);
-    console.log("[ctlCursos.js|getDados] valor id :", idBusca);
+    console.log("[ctlPacientes.js|getDados] valor id :", idBusca);
     try {
       resp = await axios.post(
-        process.env.SERVIDOR_DW3 + "/GetCursoByID",
+        process.env.SERVIDOR_DW3 + "/GetPacienteByID",
         {
-          cursoid: idBusca,
+          pacienteid: idBusca,
         },
         {
           headers: {
@@ -105,23 +105,23 @@ const getDados = (req, res) =>
       }
     } catch (error) { 
       console.log(
-        "[ctlCursos.js|getDados] Try Catch: Erro não identificado",
+        "[ctlPacientes.js|getDados] Try Catch: Erro não identificado",
         erro
       );
     }
     
   })();
 
-//@ Realiza inserção de cursos
-const insertCursos = (req, res) =>
+//@ Realiza inserção de pacientes
+const insertPacientes = (req, res) =>
   (async () => {
     token = req.session.token;
     try {
       if (req.method == "POST") {
         const regPost = validateForm(req.body);
-        regPost.cursoid = 0;
+        regPost.pacienteid = 0;
         const resp = await axios.post(
-          process.env.SERVIDOR_DW3 + "/InsertCursos",
+          process.env.SERVIDOR_DW3 + "/InsertPacientes",
           regPost,
           {
             headers: {
@@ -132,14 +132,14 @@ const insertCursos = (req, res) =>
         );
 
         if (resp.data.status == "ok") {
-          res.json({ status: "ok", mensagem: "Curso inserido com sucesso!" });
+          res.json({ status: "ok", mensagem: "Paciente inserido com sucesso!" });
         } else {
-          res.json({ status: "erro", mensagem: "Erro ao inserir curso!" });
+          res.json({ status: "erro", mensagem: "Erro ao inserir paciente!" });
         }
       }
     } catch (erro) {
       console.log(
-        "[ctlAlunos.js|insertAlunos] Try Catch: Erro não identificado",
+        "[ctlPacientes.js|insertPacientes] Try Catch: Erro não identificado",
         erro
       );
     }
@@ -147,16 +147,16 @@ const insertCursos = (req, res) =>
 
  
   
-//@ Realiza atualização de cursos
-///@ console.log("[ctlAlunos.js|updateCursos] Valor regPost: ", regPost);
-const updateCursos = (req, res) =>
+//@ Realiza atualização de pacientes
+///@ console.log("[ctlPacientes.js|updatePacientes] Valor regPost: ", regPost);
+const updatePacientes = (req, res) =>
   (async () => {
     token = req.session.token;
     try {
       if (req.method == "POST") {
         const regPost = validateForm(req.body);
         const resp = await axios.post(
-          process.env.SERVIDOR_DW3 + "/UpdateCursos",
+          process.env.SERVIDOR_DW3 + "/UpdatePacientes",
           regPost,
           {
             headers: {
@@ -167,32 +167,32 @@ const updateCursos = (req, res) =>
         );
 
         if (resp.data.status == "ok") {
-          res.json({ status: "ok", mensagem: "Curso atualizado com sucesso!" });
+          res.json({ status: "ok", mensagem: "Paciente atualizado com sucesso!" });
         } else {
-          res.json({ status: "erro", mensagem: "Erro ao atualizar curso!" });
+          res.json({ status: "erro", mensagem: "Erro ao atualizar paciente!" });
         }
       }
     } catch (erro) {
       console.log(
-        "[ctlAlunos.js|updateCursos] Try Catch: Erro não identificado.",
+        "[ctlPacientes.js|updatePacientes] Try Catch: Erro não identificado.",
         erro
       );
     }
   })();
 
-//@ Realiza remoção soft de cursos
-//@ "[ctlAlunos.js|deleteCursos] Try Catch: Erro não identificado", erro);
-const deleteCursos = (req, res) =>
+//@ Realiza remoção soft de pacientes
+//@ "[ctlPacientes.js|deletePacientes] Try Catch: Erro não identificado", erro);
+const deletePacientes = (req, res) =>
 (async () => {
   token = req.session.token;
   try {
     if (req.method == "POST") {
       const regPost = validateForm(req.body);
-      regPost.cursoid = parseInt(regPost.cursoid);
+      regPost.pacienteid = parseInt(regPost.pacienteid);
       const resp = await axios.post(
-        process.env.SERVIDOR_DW3 + "/DeleteCursos",
+        process.env.SERVIDOR_DW3 + "/DeletePacientes",
         {
-          cursoid: regPost.cursoid,
+          pacienteid: regPost.pacienteid,
         },        
         {
           headers: {
@@ -203,22 +203,22 @@ const deleteCursos = (req, res) =>
       );
 
       if (resp.data.status == "ok") {
-        res.json({ status: "ok", mensagem: "Curso removido com sucesso!" });
+        res.json({ status: "ok", mensagem: "Paciente removido com sucesso!" });
       } else {
-        res.json({ status: "erro", mensagem: "Erro ao remover curso!" });
+        res.json({ status: "erro", mensagem: "Erro ao remover paciente!" });
       }
     }
   } catch (erro) {
     console.log(
-      "[ctlAlunos.js|deleteCursos] Try Catch: Erro não identificado", erro);
+      "[ctlPacientes.js|deletePacientes] Try Catch: Erro não identificado", erro);
   }
 })();
 module.exports = {
-  getAllCursos,
-  openCursosInsert,
-  openCursosUpdate,
+  getAllPacientes,
+  openPacientesInsert,
+  openPacientesUpdate,
   getDados,
-  insertCursos,
-  updateCursos,
-  deleteCursos,
+  insertPacientes,
+  updatePacientes,
+  deletePacientes,
 };

@@ -1,20 +1,20 @@
 const axios = require("axios");
 const moment = require("moment");
 
-//@ Abre o formulário de manutenção de alunos
-const getAllAlunos = (req, res) =>
+//@ Abre o formulário de manutenção de consultas
+const getAllConsultas = (req, res) =>
   (async () => {
     userName = req.session.userName;
     try {
-      resp = await axios.get(process.env.SERVIDOR_DW3 + "/getAllAlunos", {});
+      resp = await axios.get(process.env.SERVIDOR_DW3 + "/getAllConsultas", {});
       //console.log("[ctlLogin.js] Valor resp:", resp.data);
-      res.render("alunos/view_manutencao", {
-        title: "Manutenção de alunos",
+      res.render("consultas/view_manutencao", {
+        title: "Manutenção de consultas",
         data: resp.data,
         userName: userName,
       });
     } catch (erro) {
-      console.log("[ctlAlunos.js|getAllAlunos] Try Catch:Erro de requisição");
+      console.log("[ctlConsultas.js|getAllConsultas] Try Catch:Erro de requisição");
     }
   })();
 
@@ -31,53 +31,51 @@ function validateForm(regFormPar) {
   return regFormPar;
 }
 
-//@ Abre e faz operações de CRUD no formulário de cadastro de alunos
-const insertAlunos = (req, res) =>
+//@ Abre e faz operações de CRUD no formulário de cadastro de consultas
+const insertConsultas = (req, res) =>
   (async () => {
     var oper = "";
     var registro = {};
-    var cursos = {};
+    var medicos = {};
+    var pacientes = {};
     userName = req.session.userName;
     token = req.session.token;
     try {
       if (req.method == "GET") {
         oper = "c";
-        cursos = await axios.get(
-          process.env.SERVIDOR_DW3 + "/GetAllCursos",
+        medicos = await axios.get(
+          process.env.SERVIDOR_DW3 + "/getAllConsultas",
           {}
         );
-        //console.log("[crlAlunos|insertAlunos] valor de cursos:", cursos.data.registro);
+        //console.log("[crlConsultas|insertConsultas] valor de medicos:", medicos.data.registro);
         registro = {
-          alunoid: 0,
-          prontuario: "",
-          nome: "",
-          endereco: "",
-          rendafamiliar: "0.00",
-          datanascimento: "",
-          cursoid: 0,
+          consultaid: 0,
+          codigo: "",
+          datacosulta: "",
+          medicoid: 0,
+          pacienteid: 0,
           deleted: false,
         };
 
-        res.render("alunos/view_cadAlunos", {
-          title: "Cadastro de alunos",
+        res.render("consultas/view_cadConsultas", {
+          title: "Cadastro de consultas",
           data: registro,
-          curso: cursos.data.registro,
+          medico: medicos.data.registro,
+          paciente: pacientes.data.registro,
           oper: oper,
           userName: userName,
         });
       } else {
         oper = "c";
-        const alunoREG = validateForm(req.body);
+        const consultaREG = validateForm(req.body);
         resp = await axios.post(
-          process.env.SERVIDOR_DW3 + "/insertAlunos",
+          process.env.SERVIDOR_DW3 + "/insertConsultas",
           {
-            alunoid: 0,
-            prontuario: alunoREG.prontuario,
-            nome: alunoREG.nome,
-            endereco: alunoREG.endereco,
-            rendafamiliar: alunoREG.rendafamiliar,
-            datanascimento: alunoREG.datanascimento,
-            cursoid: alunoREG.cursoid,
+            consultaid: 0,
+            codigo: consultaREG.codigo,
+            datacosulta: consultaREG.datacosulta,
+            medicoid: consultaREG.medicoid,
+            pacienteid: consultaREG.pacienteid,
             deleted: false,
           },
           {
@@ -88,48 +86,48 @@ const insertAlunos = (req, res) =>
           }
         );
 
-        console.log("[ctlAlunos|insertAlunos] resp:", resp.data);
+        console.log("[ctlConsultas|insertConsultas] resp:", resp.data);
         if (resp.data.status == "ok") {
           registro = {
-            alunoid: 0,
-            prontuario: "",
-            nome: "",
-            endereco: "",
-            rendafamiliar: "0.00",
-            datanascimento: "",
-            cursoid: 0,
+            consultaid: 0,
+            codigo: "",
+            datacosulta: "",
+            medicoid: 0,
+            pacienteid: 0,
             deleted: false,
           };
         } else {
-          registro = alunoREG;
+          registro = consultaREG;
         }
-        cursos = await axios.get(
-          process.env.SERVIDOR_DW3 + "/GetAllCursos",
+        medicos = await axios.get(
+          process.env.SERVIDOR_DW3 + "/getAllConsultas",
           {}
         );
         oper = "c";
-        res.render("alunos/view_cadAlunos", {
-          title: "Cadastro de alunos",
+        res.render("consultas/view_cadConsultas", {
+          title: "Cadastro de consultas",
           data: registro,
-          curso: cursos.data.registro,
+          medico: medicos.data.registro,
+          paciente: pacientes.data.registro,
           oper: oper,
           userName: userName,
         });
       }
     } catch (erro) {
       console.log(
-        "[ctlAlunos.js|insertAlunos] Try Catch: Erro não identificado",
+        "[ctlConsultas.js|insertConsultas] Try Catch: Erro não identificado",
         erro
       );
     }
   })();
 
-//@ Abre o formulário de cadastro de alunos para futura edição
-const viewAlunos = (req, res) =>
+//@ Abre o formulário de cadastro de consultas para futura edição
+const viewConsultas = (req, res) =>
   (async () => {
     var oper = "";
     var registro = {};
-    var cursos = {};
+    var medicos = {};
+    var pacientes = {};
     userName = req.session.userName;
     token = req.session.token;
     try {
@@ -139,9 +137,9 @@ const viewAlunos = (req, res) =>
 
         parseInt(id);
         resp = await axios.post(
-          process.env.SERVIDOR_DW3 + "/getAlunoByID",
+          process.env.SERVIDOR_DW3 + "/getConsultaByID",
           {
-            alunoid: id,
+            consultaid: id,
           },
           {
             headers: {
@@ -156,16 +154,17 @@ const viewAlunos = (req, res) =>
           registro.datanascimento = moment(registro.datanascimento).format(
             "YYYY-MM-DD"
           );
-          cursos = await axios.get(
-            process.env.SERVIDOR_DW3 + "/GetAllCursos",
+          medicos = await axios.get(
+            process.env.SERVIDOR_DW3 + "/getAllConsultas",
             {}
           );
-          console.log("[ctlAlunos|viewAlunos] GET oper:", oper);
+          console.log("[ctlConsultas|viewConsultas] GET oper:", oper);
 
-          res.render("alunos/view_cadAlunos", {
-            title: "Cadastro de alunos",
+          res.render("consultas/view_cadConsultas", {
+            title: "Cadastro de consultas",
             data: registro,
-            curso: cursos.data.registro,
+            medico: medicos.data.registro,
+            paciente: pacientes.data.registro,
             oper: oper,
             userName: userName,
           });
@@ -173,20 +172,18 @@ const viewAlunos = (req, res) =>
       } else {
         // Código vai entrar quando o usuário clicar no botão Alterar e requisição for POST
         oper = "vu";
-        console.log("[ctlAlunos|viewAlunos] POST oper:", oper);
-        const alunoREG = validateForm(req.body);
-        console.log("[ctlAlunos|viewAlunos] POST id:", alunoREG.id);
-        const id = parseInt(alunoREG.id);
+        console.log("[ctlConsultas|viewConsultas] POST oper:", oper);
+        const consultaREG = validateForm(req.body);
+        console.log("[ctlConsultas|viewConsultas] POST id:", consultaREG.id);
+        const id = parseInt(consultaREG.id);
         resp = await axios.post(
-          process.env.SERVIDOR_DW3 + "/updateAlunos",
+          process.env.SERVIDOR_DW3 + "/updateConsultas",
           {
-            alunoid: id,
-            prontuario: alunoREG.prontuario,
-            nome: alunoREG.nome,
-            endereco: alunoREG.endereco,
-            rendafamiliar: alunoREG.rendafamiliar,
-            datanascimento: alunoREG.datanascimento,
-            cursoid: alunoREG.cursoid,
+            consultaid: id,
+            codigo: consultaREG.codigo,
+            datacosulta: consultaREG.datacosulta,
+            medicoid: consultaREG.medicoid,
+            pacienteid: consultaREG.pacienteid,
             deleted: false,
           },
           {
@@ -204,16 +201,16 @@ const viewAlunos = (req, res) =>
         }
       }
     } catch (erro) {
-      res.json({ status: "[ctlAlunos.js|viewAlunos] Aluno não pode ser alterado" });
+      res.json({ status: "[ctlConsultas.js|viewConsultas] Consulta não pode ser alterado" });
       console.log(
-        "[ctlAlunos.js|viewAlunos] Try Catch: Erro não identificado",
+        "[ctlConsultas.js|viewConsultas] Try Catch: Erro não identificado",
         erro
       );
     }
   })();
 
-//@ Abre o formulário de cadastro de alunos
-const DeleteAlunos = (req, res) =>
+//@ Abre o formulário de cadastro de consultas
+const DeleteConsultas = (req, res) =>
   (async () => {
     var oper = "";
     userName = req.session.userName;
@@ -223,9 +220,9 @@ const DeleteAlunos = (req, res) =>
       const id = parseInt(req.body.id);
     
       resp = await axios.post(
-        process.env.SERVIDOR_DW3 + "/DeleteAlunos",
+        process.env.SERVIDOR_DW3 + "/DeleteConsultas",
         {
-          alunoid: id,
+          consultaid: id,
         },
         {
           headers: {
@@ -242,18 +239,18 @@ const DeleteAlunos = (req, res) =>
       }
     } catch (erro) {
       console.log(
-        "[ctlAlunos.js|DeleteAlunos] Try Catch: Erro não identificado",
+        "[ctlConsultas.js|DeleteConsultas] Try Catch: Erro não identificado",
         erro
       );
     }
   })();
 
 module.exports = {
-  getAllAlunos,
-  //cadAlunos,
-  // getAlunoByID,
-  viewAlunos,
-  insertAlunos,
-  // updateAlunos,
-  DeleteAlunos,
+  getAllConsultas,
+  //cadConsultas,
+  // getConsultaByID,
+  viewConsultas,
+  insertConsultas,
+  // updateConsultas,
+  DeleteConsultas,
 };

@@ -14,17 +14,27 @@
           <div class="col-sm-6 col-xxl-12">
             <form id="form">
               <div class="mb-1" style="display: none">
-                <input type="number" name="cursoid" class="form-control" id="cursoid" />
+                <input type="number" name="pacienteid" class="form-control" id="pacienteid" />
               </div>
               <div class="mb-1 row ">
-                <label for="codigo" class="col-sm-2 col-xxl-1 col-form-label required">Código:</label>
+                <label for="cpf" class="col-sm-2 col-xxl-1 col-form-label required">CPF:</label>
                 <div class="col-sm-4 col-xxl-2">
-                  <input type="text" name="codigo" class="form-control-plaintext" id="codigo" maxlength="10" required readonly />
+                  <input type="text" name="cpf" class="form-control-plaintext" id="cpf" maxlength="10" required readonly />
                 </div>
 
-                <label for="descricao" class="col-sm-2 col-xxl-1 col-form-label required">Descrição:</label>
+                <label for="nome" class="col-sm-2 col-xxl-1 col-form-label required">Nome:</label>
                 <div class="col-sm-4 col-xxl-3">
-                  <input type="text" name="descricao" class="form-control-plaintext" id="descricao" maxlength="50" required readonly />
+                  <input type="text" name="nome" class="form-control-plaintext" id="nome" maxlength="50" required readonly />
+                </div>
+
+                <label for="endereco" class="col-sm-2 col-xxl-1 col-form-label required">Endereço:</label>
+                <div class="col-sm-4 col-xxl-3">
+                  <input type="text" name="endereco" class="form-control-plaintext" id="endereco" maxlength="50" required readonly />
+                </div>
+
+                <label for="dataNasc" class="col-sm-2 col-xxl-1 col-form-label required">Data Nascimento:</label>
+                <div class="col-sm-4 col-xxl-3">
+                  <input type="date" name="dataNasc" class="form-control-plaintext" id="dataNasc" maxlength="50" required readonly />
                 </div>
               </div>
 
@@ -55,7 +65,7 @@
               Remover
             </button>
 
-            <button type="button" class="btn btn-primary" onclick="window.location.href = '/cursos'" id="btnFechar">
+            <button type="button" class="btn btn-primary" onclick="window.location.href = '/pacientes'" id="btnFechar">
               Fechar
             </button>
           </div>
@@ -96,8 +106,8 @@
       await getDados(idBusca);
     }
 
-    //Coloca o curso no primeiro campo do formulário
-    $("#codigo").focus();
+    //Coloca o paciente no primeiro campo do formulário
+    $("#cpf").focus();
   }
 
   //@ Busca os dados de acordo com o ID para serem alterados
@@ -106,7 +116,7 @@
 
     try {
       const resp = await axios.post(
-        "/cursos/getDados", {
+        "/pacientes/getDados", {
           idBusca: idBuscaPar
         }, {
           headers: {
@@ -115,9 +125,11 @@
         }
       );
       if (resp.data.status == "ok") {
-        $("#cursoid").val(resp.data.registro.cursoid);
-        $("#codigo").val(resp.data.registro.codigo);
-        $("#descricao").val(resp.data.registro.descricao);
+        $("#pacienteid").val(resp.data.registro.pacienteid);
+        $("#cpf").val(resp.data.registro.cpf);
+        $("#nome").val(resp.data.registro.nome);
+        $("#endereco").val(resp.data.registro.endereco);
+        $("#dataNasc").val(resp.data.registro.dataNasc);
         if (resp.data.registro.ativo) {
           $("#ativo").prop("checked", true);
         } else {
@@ -125,10 +137,10 @@
         }
 
       } else {
-        alert("Houve erro ao buscar os dados dos alunos!");
+        alert("Houve erro ao buscar os dados dos pacientes!");
       }
     } catch (error) {
-      alert("[view_cadCursos|getDados]Ocorreu um erro inesperado!" + error);
+      alert("[view_cadPacientes|getDados]Ocorreu um erro inesperado!" + error);
     }
   }
 
@@ -170,7 +182,7 @@
     }
 
     try {
-      resp = await axios.post("/cursos/insertCursos", formData, {
+      resp = await axios.post("/pacientes/insertPacientes", formData, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -183,17 +195,23 @@
         alert("Houve um erro: " + resp.data.mensagem);
       }
     } catch (error) {
-      alert("[view_cadCursos|btnSalvar]Ocorreu um erro inesperado!" + error);
+      alert("[view_cadPacientes|btnSalvar]Ocorreu um erro inesperado!" + error);
     }
   }
 
   //@ Habilita form para alteração
   function habilitaForm() {
-    $("#codigo").prop("class", "form-control");
-    $("#codigo").prop("readonly", false);
+    $("#cpf").prop("class", "form-control");
+    $("#cpf").prop("readonly", false);
 
-    $("#descricao").prop("class", "form-control");
-    $("#descricao").prop("readonly", false);
+    $("#nome").prop("class", "form-control");
+    $("#nome").prop("readonly", false);
+
+    $("#endereco").prop("class", "form-control");
+    $("#endereco").prop("readonly", false);
+
+    $("#dataNasc").prop("class", "form-control");
+    $("#dataNasc").prop("readonly", false);
 
     $("#ativo").prop("disabled", false);
   }
@@ -209,7 +227,7 @@
   }
 
   //@ Salva a alteração
-  //@ console.log("[view_cadCursos|btnSalvarAlteracao] :", )
+  //@ console.log("[view_cadPacientes|btnSalvarAlteracao] :", )
   async function btnSalvarAlteracao() {
     const formData = new FormData(form);
     const validado = validaForm(formData);
@@ -218,7 +236,7 @@
     }
 
     try {
-      resp = await axios.post("/cursos/updateCursos", formData, {
+      resp = await axios.post("/pacientes/updatePacientes", formData, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -226,25 +244,25 @@
 
       if (resp.data.status == "ok") {
         alert(resp.data.mensagem);
-        window.open("/cursos/openCursosUpdate/" + String($("#cursoid").val()), "_self");
+        window.open("/pacientes/openPacientesUpdate/" + String($("#pacienteid").val()), "_self");
       } else {
         alert("Houve um erro: " + resp.data.mensagem);
       }
     } catch (error) {
-      alert("[view_cadCursos|btnSalvarAlteracao]Ocorreu um erro inesperado!" + error);
+      alert("[view_cadPacientes|btnSalvarAlteracao]Ocorreu um erro inesperado!" + error);
     }
 
 
   }
 
   //@ Cancela a alteração
-  //@ console.log("[view_cadCursos|btnCancelarAlteracao] Valor do id", $("#cursoid").val());    
+  //@ console.log("[view_cadPacientes|btnCancelarAlteracao] Valor do id", $("#pacienteid").val());    
   async function btnCancelarAlteracao() {
-    window.open("/cursos/openCursosUpdate/" + String($("#cursoid").val()), "_self");
+    window.open("/pacientes/openPacientesUpdate/" + String($("#pacienteid").val()), "_self");
   }
 
-  //@ Remove curso
-  //@ console.log("[view_cadCursos|btnSalvarAlteracao] :", )
+  //@ Remove paciente
+  //@ console.log("[view_cadPacientes|btnSalvarAlteracao] :", )
   async function btnRemover() { 
 
     var confirma = confirm("Deseja realmente remover o registro?");
@@ -254,8 +272,8 @@
     const formData = new FormData(form);
 
     try {
-      resp = await axios.post("/cursos/deleteCursos", {
-        cursoid: formData.get("cursoid")
+      resp = await axios.post("/pacientes/deletePacientes", {
+        pacienteid: formData.get("pacienteid")
       }, {
         headers: {
           "Content-Type": "application/json",
@@ -264,12 +282,12 @@
 
       if (resp.data.status == "ok") {
         alert(resp.data.mensagem);
-        window.open("/cursos", "_self");
+        window.open("/pacientes", "_self");
       } else {
         alert("Houve um erro: " + resp.data.mensagem);
       }
     } catch (error) {
-      alert("[view_cadCursos|btnSalvarAlteracao]Ocorreu um erro inesperado!" + error);
+      alert("[view_cadPacientes|btnSalvarAlteracao]Ocorreu um erro inesperado!" + error);
     }
   }
 
