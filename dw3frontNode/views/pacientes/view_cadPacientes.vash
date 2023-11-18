@@ -292,7 +292,7 @@
   }
 
 
-  $(function() {
+  /*$(function() {
     $("#rendafamiliar").maskMoney();
   });
 
@@ -324,7 +324,7 @@
     // }
 
     console.log("Prontuario: ", formData.get("prontuario"));
-  }
+  }*/
 </script>
 
 <style>

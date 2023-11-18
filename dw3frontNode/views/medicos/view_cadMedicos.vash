@@ -131,7 +131,7 @@
         }
 
       } else {
-        alert("Houve erro ao buscar os dados dos alunos!");
+        alert("Houve erro ao buscar os dados dos medicos!");
       }
     } catch (error) {
       alert("[view_cadMedicos|getDados]Ocorreu um erro inesperado!" + error);
@@ -283,7 +283,7 @@
   }
 
 
-  $(function() {
+  /*$(function() {
     $("#rendafamiliar").maskMoney();
   });
 
@@ -315,7 +315,7 @@
     // }
 
     console.log("Prontuario: ", formData.get("prontuario"));
-  }
+  }*/
 </script>
 
 <style>

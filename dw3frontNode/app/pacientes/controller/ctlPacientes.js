@@ -5,7 +5,10 @@ const getAllPacientes = (req, res) =>
   (async () => {
     userName = req.session.userName;
     try {
-      resp = await axios.get(process.env.SERVIDOR_DW3 + "/GetAllPacientes", {});
+      resp = await axios.get(process.env.SERVIDOR_DW3 + "/GetAllPacientes", {headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
+      },});
       //console.log("[ctlLogin.js] Valor resp:", resp.data);
       res.render("pacientes/view_manutencao", {
         title: "Manutenção de pacientes",

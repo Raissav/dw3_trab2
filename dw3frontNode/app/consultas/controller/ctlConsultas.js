@@ -6,7 +6,10 @@ const getAllConsultas = (req, res) =>
   (async () => {
     userName = req.session.userName;
     try {
-      resp = await axios.get(process.env.SERVIDOR_DW3 + "/getAllConsultas", {});
+      resp = await axios.get(process.env.SERVIDOR_DW3 + "/getAllConsultas", {headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
+      },});
       //console.log("[ctlLogin.js] Valor resp:", resp.data);
       res.render("consultas/view_manutencao", {
         title: "Manutenção de consultas",
