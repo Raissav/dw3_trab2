@@ -3,12 +3,12 @@ const db = require("../../../database/databaseconfig");
 const getAllConsultas = async () => {
   return (
     await db.query(
-      "SELECT m.nome AS nome_medico, p.nome AS nome_paciente, dataconsulta" +
-      "FROM consultas c" +
-      "JOIN medicos m ON m.medicoid = c.medicoid" +
-      "JOIN pacientes p ON p.pacienteid = c.pacienteid" +
-      "WHERE c.deleted = false" +
-      "ORDER BY nome_medico ASC;"
+      "SELECT m.nome AS nome_medico, p.nome AS nome_paciente, dataconsulta " +
+      "FROM consultas c " +
+      "INNER JOIN medicos m ON m.medicoid = c.medicoid " +
+      "INNER JOIN pacientes p ON p.pacienteid = c.pacienteid " +
+      "WHERE c.deleted = false " +
+      "ORDER BY m.nome ASC;"
     )
   ).rows;
 };
@@ -16,12 +16,12 @@ const getAllConsultas = async () => {
 const getConsultasByID = async (consultaIDPar) => {
   return (
     await db.query(
-      "SELECT m.nome AS nome_medico, p.nome AS nome_paciente, dataconsulta" +
-      "FROM consultas c" +
-      "JOIN medicos m ON m.medicoid = c.medicoid" +
-      "JOIN pacientes p ON p.pacienteid = c.pacienteid" +
-      "WHERE c.deleted = false" +
-      "ORDER BY nome_medico ASC;"
+      "SELECT m.nome AS nome_medico, p.nome AS nome_paciente, dataconsulta " +
+      "FROM consultas c " +
+      "INNER JOIN medicos m ON m.medicoid = c.medicoid " +
+      "INNER JOIN pacientes p ON p.pacienteid = c.pacienteid " +
+      "WHERE c.consultaid = $1 AND c.deleted = false " +
+      "ORDER BY m.nome ASC;",
       [consultaIDPar]
     )
   ).rows;
@@ -34,7 +34,7 @@ const insertConsultas = async (consultaREGPar) => {
   try {
     linhasAfetadas = (
       await db.query(
-        "INSERT INTO consulta " + "values(default, $1, $2, $3, $4, $5)",
+        "INSERT INTO consultas " + "values(default, $1, $2, $3, $4, $5)",
         [
           consultaREGPar.codigo,
           consultaREGPar.dataconsulta,

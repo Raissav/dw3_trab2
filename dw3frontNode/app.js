@@ -10,8 +10,9 @@ const session = require('express-session');
 require('dotenv').config();
 
 var indexRouter = require('./routes/index');
-var alunosRouter = require('./routes/rte_alunos');
-var cursosRouter = require('./routes/rte_cursos');
+var consultasRouter = require('./routes/rte_consultas');
+var medicosRouter = require('./routes/rte_medicos');
+var pacientesRouter = require('./routes/rte_pacientes');
 
 var app = express();
 
@@ -38,8 +39,9 @@ app.use(
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/alunos', alunosRouter);
-app.use('/cursos',  cursosRouter);
+app.use('/consultas', consultasRouter);
+app.use('/medicos',  medicosRouter);
+app.use('/pacientes',  pacientesRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

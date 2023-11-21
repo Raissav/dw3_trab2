@@ -16,25 +16,25 @@ routerApp.get("/", (req, res) => {
 });
 
 //Rotas de Pacientes
-routerApp.get("/getAllPacientes", appPacientes.getAllPacientes);
+routerApp.get("/getAllPacientes", appLogin.AutenticaJWT, appPacientes.getAllPacientes);
 routerApp.post("/getPacientesByID", appLogin.AutenticaJWT, appPacientes.getPacientesByID);
 routerApp.post("/insertPacientes", appLogin.AutenticaJWT, appPacientes.insertPacientes);
-routerApp.post("/updatePacientes", appPacientes.updatePacientes);
-routerApp.post("/DeletePacientes", appPacientes.DeletePacientes);
+routerApp.post("/updatePacientes", appLogin.AutenticaJWT, appPacientes.updatePacientes);
+routerApp.post("/DeletePacientes", appLogin.AutenticaJWT, appPacientes.DeletePacientes);
 
 //Rotas de Medicos
-routerApp.get("/GetAllMedicos", appMedicos.GetAllMedicos);
-routerApp.post("/GetMedicosByID", appMedicos.GetMedicosByID);
-routerApp.post("/InsertMedicos", appMedicos.InsertMedicos);
-routerApp.post("/UpdateMedicos", appMedicos.UpdateMedicos);
-routerApp.post("/DeleteMedicos", appMedicos.DeleteMedicos);
+routerApp.get("/GetAllMedicos", appLogin.AutenticaJWT, appMedicos.GetAllMedicos);
+routerApp.post("/GetMedicosByID", appLogin.AutenticaJWT, appMedicos.GetMedicosByID);
+routerApp.post("/InsertMedicos", appLogin.AutenticaJWT, appMedicos.InsertMedicos);
+routerApp.post("/UpdateMedicos", appLogin.AutenticaJWT, appMedicos.UpdateMedicos);
+routerApp.post("/DeleteMedicos", appLogin.AutenticaJWT, appMedicos.DeleteMedicos);
 
 //Rotas de Consultas
-routerApp.get("/getAllConsultas", appConsultas.getAllConsultas);
-routerApp.post("/getConsultasByID", appConsultas.getConsultasByID);
-routerApp.post("/insertConsultas", appConsultas.insertConsultas);
-routerApp.post("/updateConsultas", appConsultas.updateConsultas);
-routerApp.post("/DeleteConsultas", appConsultas.DeleteConsultas);
+routerApp.get("/getAllConsultas", appLogin.AutenticaJWT, appConsultas.getAllConsultas);
+routerApp.post("/getConsultasByID", appLogin.AutenticaJWT, appConsultas.getConsultasByID);
+routerApp.post("/insertConsultas", appLogin.AutenticaJWT, appConsultas.insertConsultas);
+routerApp.post("/updateConsultas", appLogin.AutenticaJWT, appConsultas.updateConsultas);
+routerApp.post("/DeleteConsultas", appLogin.AutenticaJWT, appConsultas.DeleteConsultas);
 
 // Rota Login
 routerApp.post("/Login", appLogin.Login);

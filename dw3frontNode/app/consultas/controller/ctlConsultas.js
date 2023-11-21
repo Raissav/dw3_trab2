@@ -5,6 +5,7 @@ const moment = require("moment");
 const getAllConsultas = (req, res) =>
   (async () => {
     userName = req.session.userName;
+    token = req.session.token;
     try {
       resp = await axios.get(process.env.SERVIDOR_DW3 + "/getAllConsultas", {headers: {
         "Content-Type": "application/json",

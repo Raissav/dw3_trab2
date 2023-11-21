@@ -9,7 +9,7 @@ const getAllPacientes = (req, res) =>
 const getPacientesByID = (req, res) =>
   (async () => {
     const pacienteID = parseInt(req.body.pacienteid);
-    let registro = await mdlPacientes.getPacienteByID(pacienteID);
+    let registro = await mdlPacientes.getPacientesByID(pacienteID);
 
     res.json({ status: "ok", "registro": registro });
   })();

@@ -4,6 +4,7 @@ const axios = require("axios");
 const getAllMedicos = (req, res) =>
   (async () => {
     userName = req.session.userName;
+    token = req.session.token;
     try {
       resp = await axios.get(process.env.SERVIDOR_DW3 + "/GetAllMedicos", {headers: {
         "Content-Type": "application/json",
@@ -92,7 +93,7 @@ const getDados = (req, res) =>
     console.log("[ctlMedicos.js|getDados] valor id :", idBusca);
     try {
       resp = await axios.post(
-        process.env.SERVIDOR_DW3 + "/GetMedicoByID",
+        process.env.SERVIDOR_DW3 + "/GetMedicosByID",
         {
           medicoid: idBusca,
         },

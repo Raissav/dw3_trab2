@@ -198,6 +198,9 @@
     $("#crm").prop("class", "form-control");
     $("#crm").prop("readonly", false);
 
+    $("#nome").prop("class", "form-control");
+    $("#nome").prop("readonly", false);
+
     $("#descricao").prop("class", "form-control");
     $("#descricao").prop("readonly", false);
 

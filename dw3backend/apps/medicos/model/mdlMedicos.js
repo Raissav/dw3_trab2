@@ -3,7 +3,7 @@ const db = require("../../../database/databaseconfig");
 const GetAllMedicos = async () => {
   return (
     await db.query(
-      "SELECT * " + "FROM medicos where deleted = false ORDER BY descricao ASC"
+      "SELECT * " + "FROM medicos where deleted = false ORDER BY nome ASC"
     )
   ).rows;
 };
@@ -12,7 +12,7 @@ const GetMedicosByID = async (medicoIDPar) => {
   return (
     await db.query(
       "SELECT * " +
-        "FROM medico WHERE medicoid = $1 and deleted = false ORDER BY descricao ASC",
+        "FROM medicos WHERE medicoid = $1 and deleted = false ORDER BY nome ASC",
       [medicoIDPar]
     )
   ).rows;
@@ -49,9 +49,9 @@ const UpdateMedicos = async (registroPar) => {
     linhasAfetadas = (
       await db.query(
         "UPDATE medicos SET " +
-          "codigo = $2, " +
-          "descricao = $3, " +
-          "ativo = $4, " +
+          "crm = $2, " +
+          "nome = $3, " +
+          "especializacao = $4, " +
           "deleted = $5 " +          
           "WHERE medicoid = $1",
         [

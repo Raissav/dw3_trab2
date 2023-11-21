@@ -4,8 +4,7 @@ const getAllPacientes = async () => {
   return (
     await db.query(
       "SELECT * " +
-        "FROM pacientes WHERE deleted = false ORDER BY nome ASC",
-      [pacienteIDPar]
+        "FROM pacientes WHERE deleted = false ORDER BY nome ASC"
     )
   ).rows;
 };
@@ -60,6 +59,7 @@ const UpdatePacientes = async (pacienteREGPar) => {
           "WHERE pacienteid = $1",
         [
           pacienteREGPar.pacienteid,
+          pacienteREGPar.cpf,
           pacienteREGPar.nome,
           pacienteREGPar.endereco,
           pacienteREGPar.datanascimento,
@@ -68,7 +68,7 @@ const UpdatePacientes = async (pacienteREGPar) => {
       )
     ).rowCount;
   } catch (error) {
-    msg = "[mdlAlunos|insertAlunos] " + error.detail;
+    msg = "[mdlPacientes|insertPacientes] " + error.detail;
     linhasAfetadas = -1;
   }
 
@@ -83,7 +83,7 @@ const DeletePacientes = async (pacienteREGPar) => {
     linhasAfetadas = (
     await db.query(
       "UPDATE pacientes SET " + "deleted = true " + "WHERE pacienteid = $1",
-      [pacienteREGPar.pacinteid]
+      [pacienteREGPar.pacienteid]
     )
   ).rowCount;
 } catch (error) {

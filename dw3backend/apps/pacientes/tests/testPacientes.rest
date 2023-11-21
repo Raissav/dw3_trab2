@@ -12,7 +12,7 @@ content-type: application/json
 ### teste de buscar todos os pacientes
 GET http://localhost:40000/getAllPacientes HTTP/1.1
 content-type: application/json
-//Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRob3JpemVkIjp0cnVlLCJleHAiOjE2NzQ3ODI5NzksInVzZXJuYW1lIjoicXdlIn0.SlYYCm8J6wlpb3i1jJcSvhSz6VjwKvzPOxza8P6-hzo
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InF3ZSIsImlhdCI6MTcwMDU2NzAwMywiZXhwIjoxNzAwNTY3NjAzfQ.xAe847RB-GYHPf1KIzuyqN03OzbMsPPXNozKi30L5A8
 
 {    
     
@@ -21,16 +21,16 @@ content-type: application/json
 ### teste de buscar paciente por ID
 POST http://localhost:40000/getPacientesByID HTTP/1.1
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InF3ZSIsImlhdCI6MTY5MTQxMTU5NCwiZXhwIjoxNjkxNDExODk0fQ.1Ig9H4D6QMW0TSkwJIyv7YZjBO35u5WkOpqhoSBRA1U
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InF3ZSIsImlhdCI6MTcwMDU2NzAwMywiZXhwIjoxNzAwNTY3NjAzfQ.xAe847RB-GYHPf1KIzuyqN03OzbMsPPXNozKi30L5A8
 
 {    
-    "pacienteid": 18
+    "pacienteid": 1
 }
 
 ### teste de inserção de paciente
 POST http://localhost:40000/insertPacientes HTTP/1.1
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InF3ZSIsImlhdCI6MTY5MTQzNTg3MSwiZXhwIjoxNjkxNDM2NDcxfQ.hAh0VyRfEXvYmhunlJALD-qda8pYr2zzAHobn1yua20
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InF3ZSIsImlhdCI6MTcwMDU2NzAwMywiZXhwIjoxNzAwNTY3NjAzfQ.xAe847RB-GYHPf1KIzuyqN03OzbMsPPXNozKi30L5A8
 
 {    
     "pacienteid": 0,
@@ -44,10 +44,10 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InF3Z
 ### teste de atualização de paciente
 POST http://localhost:40000/updatePacientes HTTP/1.1
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InF3ZSIsImlhdCI6MTY5MTQzNTg3MSwiZXhwIjoxNjkxNDM2NDcxfQ.hAh0VyRfEXvYmhunlJALD-qda8pYr2zzAHobn1yua20
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InF3ZSIsImlhdCI6MTcwMDU2NzAwMywiZXhwIjoxNzAwNTY3NjAzfQ.xAe847RB-GYHPf1KIzuyqN03OzbMsPPXNozKi30L5A8
 
 {    
-    "pacienteid": 52,
+    "pacienteid": 2,
     "cpf": "555.555.555-55",
     "nome": "Josue das Neves",
     "endereco": "Rua das Flores",
@@ -58,8 +58,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InF3Z
 ### teste de atualização de paciente
 POST http://localhost:40000/DeletePacientes HTTP/1.1
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InF3ZSIsImlhdCI6MTY5MTQ5MDg3NCwiZXhwIjoxNjkxNDkxNDc0fQ.1ABhMgWYm8gGKy7q90GOPQpNoY5M1LLzpCltKxFjcEo
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InF3ZSIsImlhdCI6MTcwMDU2NzAwMywiZXhwIjoxNzAwNTY3NjAzfQ.xAe847RB-GYHPf1KIzuyqN03OzbMsPPXNozKi30L5A8
 
 {    
-    "pacienteid": 55  
+    "pacienteid": 5
 }
