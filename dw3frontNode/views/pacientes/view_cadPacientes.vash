@@ -32,15 +32,10 @@
                   <input type="text" name="endereco" class="form-control-plaintext" id="endereco" maxlength="50" required readonly />
                 </div>
 
-                <label for="dataNasc" class="col-sm-2 col-xxl-1 col-form-label required">Data Nascimento:</label>
+                <label for="datanascimento" class="col-sm-2 col-xxl-1 col-form-label required">Data Nascimento:</label>
                 <div class="col-sm-4 col-xxl-3">
-                  <input type="date" name="dataNasc" class="form-control-plaintext" id="dataNasc" maxlength="50" required readonly />
+                  <input type="date" name="datanascimento" class="form-control-plaintext" id="datanascimento" maxlength="50" required readonly />
                 </div>
-              </div>
-
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="ativo" id="ativo" checked disabled />
-                <label class="form-check-label" for="ativo"> ativo </label>
               </div>
             </form>
           </div>
@@ -129,13 +124,9 @@
         $("#cpf").val(resp.data.registro.cpf);
         $("#nome").val(resp.data.registro.nome);
         $("#endereco").val(resp.data.registro.endereco);
-        $("#dataNasc").val(resp.data.registro.dataNasc);
-        if (resp.data.registro.ativo) {
-          $("#ativo").prop("checked", true);
-        } else {
-          $("#ativo").prop("checked", false);
-        }
-
+        //$("#datanascimento").val(resp.data.registro.datanascimento);
+        const dataNasc = new Date(resp.data.registro.datanascimento);
+        $("#datanascimento").val(dataNasc.toISOString().split('T')[0]);
       } else {
         alert("Houve erro ao buscar os dados dos pacientes!");
       }
@@ -162,11 +153,6 @@
       }
     });
 
-    if (formDataPar.get("ativo") == "on") {
-      formDataPar.set("ativo", true);
-    } else {
-      formDataPar.set("ativo", false);
-    }
     formDataPar.set("deleted", false);
 
     return validado;
@@ -210,10 +196,8 @@
     $("#endereco").prop("class", "form-control");
     $("#endereco").prop("readonly", false);
 
-    $("#dataNasc").prop("class", "form-control");
-    $("#dataNasc").prop("readonly", false);
-
-    $("#ativo").prop("disabled", false);
+    $("#datanascimento").prop("class", "form-control");
+    $("#datanascimento").prop("readonly", false);
   }
 
   //@ Habilita a alteração

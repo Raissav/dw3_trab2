@@ -32,11 +32,6 @@
                   <input type="text" name="especializacao" class="form-control-plaintext" id="especializacao" maxlength="50" required readonly />
                 </div>
               </div>
-
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="ativo" id="ativo" checked disabled />
-                <label class="form-check-label" for="ativo"> ativo </label>
-              </div>
             </form>
           </div>
           <div class="">
@@ -124,11 +119,6 @@
         $("#crm").val(resp.data.registro.crm);
         $("#nome").val(resp.data.registro.nome);
         $("#especializacao").val(resp.data.registro.especializacao);
-        if (resp.data.registro.ativo) {
-          $("#ativo").prop("checked", true);
-        } else {
-          $("#ativo").prop("checked", false);
-        }
 
       } else {
         alert("Houve erro ao buscar os dados dos medicos!");
@@ -156,11 +146,6 @@
       }
     });
 
-    if (formDataPar.get("ativo") == "on") {
-      formDataPar.set("ativo", true);
-    } else {
-      formDataPar.set("ativo", false);
-    }
     formDataPar.set("deleted", false);
 
     return validado;
@@ -206,8 +191,6 @@
 
     $("#especializacao").prop("class", "form-control");
     $("#especializacao").prop("readonly", false);
-
-    $("#ativo").prop("disabled", false);
   }
 
   //@ Habilita a alteração

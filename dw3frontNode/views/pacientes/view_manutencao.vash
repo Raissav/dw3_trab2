@@ -30,7 +30,7 @@
                                     <th>Ação</th>                                    
                                     <th>CPF</th>
                                     <th>Nome</th>
-                                    <th>Ativo</th>                                    
+                                    <th>Endereço</th>                                    
                                 </tr>
                             </thead>
                             <tbody>
@@ -40,7 +40,7 @@
                                         class="fa fa-magnifying-glass"></i>Visualizar</a></td>
                                     <td>@registro.cpf</td>
                                     <td>@registro.nome</td>
-                                    <td>@(registro.ativo ? "Sim" : "Não")</td>                                    
+                                    <td>@registro.endereco</td>                                    
                                 </tr>
                                 })
                             </tbody>
@@ -49,7 +49,7 @@
                                     <th>Ação</th>                                    
                                     <th>CPF</th>
                                     <th>Nome</th>
-                                    <th>Ativo</th> 
+                                    <th>Endereço</th> 
                                 </tr>
                             </tfoot>
                         </table>
