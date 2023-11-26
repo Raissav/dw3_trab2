@@ -75,7 +75,7 @@
 
                             @if (model.oper=="v") {
                             <button type="button" class="btn btn-warning me-2 mb-3"
-                                onclick="window.open('/consultas/viewConsultas/' + $('#id').val() + '/vu', '_self')">Alterar</button>
+                                onclick="window.open('/consultas/viewConsultas' + $('#id').val() + '/vu', '_self')">Alterar</button>
                             }
 
                             @if (model.oper=="v") {

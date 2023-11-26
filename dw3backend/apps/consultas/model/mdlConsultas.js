@@ -3,12 +3,9 @@ const db = require("../../../database/databaseconfig");
 const getAllConsultas = async () => {
   return (
     await db.query(
-      "SELECT m.nome AS nome_medico, p.nome AS nome_paciente, dataconsulta " +
-      "FROM consultas c " +
-      "INNER JOIN medicos m ON m.medicoid = c.medicoid " +
-      "INNER JOIN pacientes p ON p.pacienteid = c.pacienteid " +
-      "WHERE c.deleted = false " +
-      "ORDER BY m.nome ASC;"
+      "SELECT *, (SELECT nome from pacientes where pacienteid = consultas.pacienteid) AS nome_paciente, " +
+      "(SELECT nome from medicos where medicoid = consultas.medicoid) AS nome_medico " +
+      "FROM consultas where deleted = false ORDER BY nome_paciente ASC;"
     )
   ).rows;
 };
@@ -16,12 +13,9 @@ const getAllConsultas = async () => {
 const getConsultasByID = async (consultaIDPar) => {
   return (
     await db.query(
-      "SELECT m.nome AS nome_medico, p.nome AS nome_paciente, dataconsulta " +
-      "FROM consultas c " +
-      "INNER JOIN medicos m ON m.medicoid = c.medicoid " +
-      "INNER JOIN pacientes p ON p.pacienteid = c.pacienteid " +
-      "WHERE c.consultaid = $1 AND c.deleted = false " +
-      "ORDER BY m.nome ASC;",
+      "SELECT *, (SELECT nome from pacientes where pacienteid = consultas.pacienteid) AS nome_paciente, " +
+      "(SELECT nome from medicos where medicoid = consultas.medicoid) AS nome_medico " +
+      "FROM consultas where deleted = false ORDER BY nome_paciente ASC;",
       [consultaIDPar]
     )
   ).rows;

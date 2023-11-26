@@ -12,7 +12,7 @@ content-type: application/json
 ### teste de buscar todos os consultas
 GET http://localhost:40000/getAllConsultas HTTP/1.1
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InF3ZSIsImlhdCI6MTcwMDU2OTI4NSwiZXhwIjoxNzAwNTY5ODg1fQ.DYXQPZxdENYxvZC6jPaFd-U6mAit_in5sNwm7b6tdUk
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InF3ZSIsImlhdCI6MTcwMDY2MjI3MywiZXhwIjoxNzAwNjYyODczfQ.rWDZnMH2r2W8C5IWy0jY7bpcn069s4Qi9aYYLl4JWA4
 
 {    
     
@@ -21,7 +21,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InF3Z
 ### teste de buscar consulta por ID
 POST http://localhost:40000/getConsultasByID HTTP/1.1
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InF3ZSIsImlhdCI6MTcwMDU2OTI4NSwiZXhwIjoxNzAwNTY5ODg1fQ.DYXQPZxdENYxvZC6jPaFd-U6mAit_in5sNwm7b6tdUk
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InF3ZSIsImlhdCI6MTcwMDY2MzY0MiwiZXhwIjoxNzAwNjY0MjQyfQ.4PWmkiCUTYVYIj8KLQq0Nz4jWguRDQKSiI7YD6C01Uw
 
 {    
     "consultaid": 1

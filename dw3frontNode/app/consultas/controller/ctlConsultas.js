@@ -11,7 +11,7 @@ const getAllConsultas = (req, res) =>
         "Content-Type": "application/json",
         Authorization: "Bearer " + token,
       },});
-      //console.log("[ctlLogin.js] Valor resp:", resp.data);
+      console.log("[ctlLogin.js] Valor resp:", resp.data);
       res.render("consultas/view_manutencao", {
         title: "Manutenção de consultas",
         data: resp.data,
@@ -28,8 +28,8 @@ function validateForm(regFormPar) {
   //@ Como todos os campos podem ter valor nulo, vou me preocupar
   //@ com campo datanascimento. Caso ele tenha valor "", vou atribuir null a ele.
 
-  if (regFormPar.datanascimento == "") {
-    regFormPar.datanascimento = null;
+  if (regFormPar.dataconsulta == "") {
+    regFormPar.dataconsulta = null;
   }
 
   return regFormPar;
@@ -49,11 +49,14 @@ const insertConsultas = (req, res) =>
         oper = "c";
         medicos = await axios.get(
           process.env.SERVIDOR_DW3 + "/getAllConsultas",
-          {}
+          {headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + token,
+          },}
         );
-        //console.log("[crlConsultas|insertConsultas] valor de medicos:", medicos.data.registro);
+        console.log("[crlConsultas|insertConsultas] valor de medicos:", medicos.data.registro);
         registro = {
-          consultaid: 0,
+          //consultaid: 0,
           codigo: "",
           datacosulta: "",
           medicoid: 0,
@@ -75,7 +78,7 @@ const insertConsultas = (req, res) =>
         resp = await axios.post(
           process.env.SERVIDOR_DW3 + "/insertConsultas",
           {
-            consultaid: 0,
+            //consultaid: 0,
             codigo: consultaREG.codigo,
             datacosulta: consultaREG.datacosulta,
             medicoid: consultaREG.medicoid,
@@ -93,7 +96,7 @@ const insertConsultas = (req, res) =>
         console.log("[ctlConsultas|insertConsultas] resp:", resp.data);
         if (resp.data.status == "ok") {
           registro = {
-            consultaid: 0,
+            //consultaid: 0,
             codigo: "",
             datacosulta: "",
             medicoid: 0,
@@ -105,7 +108,10 @@ const insertConsultas = (req, res) =>
         }
         medicos = await axios.get(
           process.env.SERVIDOR_DW3 + "/getAllConsultas",
-          {}
+          {headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + token,
+          },}
         );
         oper = "c";
         res.render("consultas/view_cadConsultas", {
@@ -141,7 +147,7 @@ const viewConsultas = (req, res) =>
 
         parseInt(id);
         resp = await axios.post(
-          process.env.SERVIDOR_DW3 + "/getConsultaByID",
+          process.env.SERVIDOR_DW3 + "/getConsultasByID",
           {
             consultaid: id,
           },
@@ -155,20 +161,23 @@ const viewConsultas = (req, res) =>
 
         if (resp.data.status == "ok") {
           registro = resp.data.registro[0];
-          registro.datanascimento = moment(registro.datanascimento).format(
+          registro.dataconsulta = moment(registro.dataconsulta).format(
             "YYYY-MM-DD"
           );
           medicos = await axios.get(
             process.env.SERVIDOR_DW3 + "/getAllConsultas",
-            {}
+            {headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer " + token,
+            },}
           );
           console.log("[ctlConsultas|viewConsultas] GET oper:", oper);
 
           res.render("consultas/view_cadConsultas", {
             title: "Cadastro de consultas",
             data: registro,
-            medico: medicos.data.registro,
-            paciente: pacientes.data.registro,
+            medicos: medicos.data.registro,
+            pacientes: pacientes.data.registro,
             oper: oper,
             userName: userName,
           });
